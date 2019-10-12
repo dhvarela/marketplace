@@ -41,6 +41,21 @@ class CartTest extends TestCase
         $this->assertEquals(5, $cart->totalProducts());
     }
 
+    /** @test */
+    public function test_should_add_same_product_in_different_actions(): void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+        $product2 = $this->getProduct('product-b', 8, 7, 'EUR', 4);
+
+        $cart->addProductWithQuantity($product1, 3);
+        $cart->addProductWithQuantity($product2, 6);
+        $cart->addProductWithQuantity($product1, 2);
+
+        $this->assertCount(2, $cart);
+        $this->assertEquals(11, $cart->totalProducts());
+    }
+
     private function getProduct($id, $amount, $offerAmount, $isoCode, $minUnitsToApplyOffer): ProductInterface
     {
         $money = new Money($amount, new Currency($isoCode));

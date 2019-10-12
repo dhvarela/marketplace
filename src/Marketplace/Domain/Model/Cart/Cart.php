@@ -37,7 +37,7 @@ class Cart implements Countable
         $cartLine = new CartLine($product, $quantity);
         $this->addCartLine($cartLine);
     }
-    
+
     public function totalProducts()
     {
         $acum = 0;
@@ -47,7 +47,7 @@ class Cart implements Countable
         }
         return $acum;
     }
-    
+
     public function count()
     {
         return count($this->lines);
@@ -56,6 +56,21 @@ class Cart implements Countable
     private function addCartLine(CartLine $cartLine)
     {
         $product = $cartLine->product();
-        $this->lines[$product->id()] = $cartLine;
+        $productId = $product->id();
+
+        if (isset($this->lines[$productId])) {
+
+            $currentCartLine = $this->lines[$productId];
+
+            $newCartLine = new CartLine(
+                $product,
+                $currentCartLine->quantity() + $cartLine->quantity()
+            );
+
+            $this->lines[$productId] = $newCartLine;
+
+        } else {
+            $this->lines[$product->id()] = $cartLine;
+        }
     }
 }
