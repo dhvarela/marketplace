@@ -9,6 +9,8 @@ use Countable;
 
 class Cart implements Countable
 {
+    const MAX_LINES = 10;
+    
     /** @var CartId */
     private $id;
     /** @var CartLine array */
@@ -79,7 +81,15 @@ class Cart implements Countable
             $this->lines[$productId] = $newCartLine;
 
         } else {
+            $this->ensureLinesLimitAreNotReached();
             $this->lines[$product->id()] = $cartLine;
+        }
+    }
+
+    private function ensureLinesLimitAreNotReached()
+    {
+        if ($this->count() >= self::MAX_LINES) {
+            LinesLimitReached::throw();
         }
     }
 }

@@ -2,10 +2,11 @@
 declare(strict_types=1);
 
 use App\Marketplace\Domain\Model\Cart\Cart;
-use App\Marketplace\Domain\Model\Product\Product;
-use App\Marketplace\Domain\Model\Product\ProductInterface;
 use App\Marketplace\Domain\Model\Money\Money;
 use App\Marketplace\Domain\Model\Currency\Currency;
+use App\Marketplace\Domain\Model\Product\Product;
+use App\Marketplace\Domain\Model\Product\ProductInterface;
+use App\Marketplace\Domain\Model\Cart\LinesLimitReached;
 use App\Marketplace\Domain\Model\Cart\ProductDoesNotExistInCart;
 use PHPUnit\Framework\TestCase;
 
@@ -72,7 +73,8 @@ class CartTest extends TestCase
         $this->assertCount(1, $cart);
     }
 
-    public function test_should_fail_when_tries_to_remove_a_non_existing_product() : void
+    /** @test */
+    public function test_should_fail_trying_to_remove_a_non_existing_product() : void
     {
         $cart = Cart::init();
         $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
@@ -81,11 +83,36 @@ class CartTest extends TestCase
         $cart->removeProduct($product1);
     }
 
+    /** @test */
+    public function test_should_fail_when_max_cart_lines_are_reached() : void
+    {
+        $cart = Cart::init();
+        $products = $this->getRandomProducts();
+
+        $this->expectException(LinesLimitReached::class);
+
+        foreach ($products as $aProduct) {
+            $cart->addProductWithQuantity($aProduct, rand(1,10));
+        }
+    }
+
     private function getProduct($id, $amount, $offerAmount, $isoCode, $minUnitsToApplyOffer): ProductInterface
     {
         $money = new Money($amount, new Currency($isoCode));
         $offerMoney = new Money($offerAmount, new Currency($isoCode));
 
         return new Product($id, $money, $offerMoney, $minUnitsToApplyOffer);
+    }
+
+    private function getRandomProducts() : array
+    {
+        $products = array();
+        for ($i=1; $i<= (Cart::MAX_LINES + 1); $i++) {
+            $amount = rand(5,16);
+            $offerAmount = $amount - rand(1,3);
+            $products[] = $this->getProduct('product-' . $i, $amount, $offerAmount, 'EUR', rand(2,5));
+        }
+
+        return $products;
     }
 }
