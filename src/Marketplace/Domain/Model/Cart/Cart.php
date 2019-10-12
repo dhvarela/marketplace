@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace App\Marketplace\Domain\Model\Cart;
 
+use App\Marketplace\Domain\Model\CartLine\CartLine;
+use App\Marketplace\Domain\Model\Product\ProductInterface;
+use Countable;
 
-class Cart
+class Cart implements Countable
 {
-    /** @var CartId $id */
+    /** @var CartId */
     private $id;
-    /** @var array $lines */
+    /** @var CartLine array */
     private $lines;
 
     public function __construct(CartId $id)
@@ -29,8 +32,25 @@ class Cart
         return $this->id;
     }
 
+    public function addProductWithQuantity(ProductInterface $product, int $quantity)
+    {
+        $cartLine = new CartLine($product, $quantity);
+        $this->addCartLine($cartLine);
+    }
+    
     public function to1talProducts()
     {
         return 0;
+    }
+    
+    public function count()
+    {
+        return count($this->lines);
+    }
+
+    private function addCartLine(CartLine $cartLine)
+    {
+        $product = $cartLine->product();
+        $this->lines[$product->id()] = $cartLine;
     }
 }
