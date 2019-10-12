@@ -15,7 +15,7 @@ class CartTest extends TestCase
     {
         $cart = Cart::init();
         $this->assertNotEmpty($cart->id());
-        $this->assertEquals(0, $cart->to1talProducts());
+        $this->assertEquals(0, $cart->totalProducts());
     }
 
     /** @test */
@@ -27,6 +27,18 @@ class CartTest extends TestCase
         $cart->addProductWithQuantity($product, 1);
 
         $this->assertCount(1, $cart);
+    }
+
+    /** @test */
+    public function test_should_add_product_with_quantity(): void
+    {
+        $cart = Cart::init();
+        $product = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+
+        $cart->addProductWithQuantity($product, 5);
+
+        $this->assertCount(1, $cart);
+        $this->assertEquals(5, $cart->totalProducts());
     }
 
     private function getProduct($id, $amount, $offerAmount, $isoCode, $minUnitsToApplyOffer): ProductInterface

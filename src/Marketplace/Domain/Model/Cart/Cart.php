@@ -38,9 +38,14 @@ class Cart implements Countable
         $this->addCartLine($cartLine);
     }
     
-    public function to1talProducts()
+    public function totalProducts()
     {
-        return 0;
+        $acum = 0;
+        /** @var CartLine $aLine */
+        foreach ($this->lines as $aLine) {
+            $acum += $aLine->quantity();
+        }
+        return $acum;
     }
     
     public function count()
