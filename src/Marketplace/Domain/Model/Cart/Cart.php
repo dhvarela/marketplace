@@ -53,6 +53,15 @@ class Cart implements Countable
         return count($this->lines);
     }
 
+    public function removeProduct(ProductInterface $product)
+    {
+        if (!isset($this->lines[$product->id()])) {
+            ProductDoesNotExistInCart::throwBecauseOf($product->id());
+        }
+
+        unset($this->lines[$product->id()]);
+    }
+
     private function addCartLine(CartLine $cartLine)
     {
         $product = $cartLine->product();

@@ -6,6 +6,7 @@ use App\Marketplace\Domain\Model\Product\Product;
 use App\Marketplace\Domain\Model\Product\ProductInterface;
 use App\Marketplace\Domain\Model\Money\Money;
 use App\Marketplace\Domain\Model\Currency\Currency;
+use App\Marketplace\Domain\Model\Cart\ProductDoesNotExistInCart;
 use PHPUnit\Framework\TestCase;
 
 class CartTest extends TestCase
@@ -54,6 +55,30 @@ class CartTest extends TestCase
 
         $this->assertCount(2, $cart);
         $this->assertEquals(11, $cart->totalProducts());
+    }
+
+    /** @test */
+    public function test_should_remove_an_existing_product() : void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+        $product2 = $this->getProduct('product-b', 8, 7, 'EUR', 4);
+
+        $cart->addProductWithQuantity($product1, 3);
+        $cart->addProductWithQuantity($product2, 6);
+
+        $cart->removeProduct($product1);
+
+        $this->assertCount(1, $cart);
+    }
+
+    public function test_should_fail_when_tries_to_remove_a_non_existing_product() : void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+
+        $this->expectException(ProductDoesNotExistInCart::class);
+        $cart->removeProduct($product1);
     }
 
     private function getProduct($id, $amount, $offerAmount, $isoCode, $minUnitsToApplyOffer): ProductInterface
