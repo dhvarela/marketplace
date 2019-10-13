@@ -1,0 +1,23 @@
+
+-
+    request:
+        method: GET
+        url: 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=DO55C7DNJANYYW8Z'
+        headers:
+            Host: www.alphavantage.co
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Connection: keep-alive
+            Server: gunicorn/19.7.0
+            Date: 'Sun, 13 Oct 2019 15:46:37 GMT'
+            Transfer-Encoding: chunked
+            Vary: Cookie
+            X-Frame-Options: SAMEORIGIN
+            Content-Type: application/json
+            Allow: 'GET, HEAD, OPTIONS'
+            Via: '1.1 vegur'
+        body: "{\n    \"Realtime Currency Exchange Rate\": {\n        \"1. From_Currency Code\": \"EUR\",\n        \"2. From_Currency Name\": \"Euro\",\n        \"3. To_Currency Code\": \"USD\",\n        \"4. To_Currency Name\": \"United States Dollar\",\n        \"5. Exchange Rate\": \"1.10360000\",\n        \"6. Last Refreshed\": \"2019-10-13 15:46:01\",\n        \"7. Time Zone\": \"UTC\",\n        \"8. Bid Price\": \"1.10360000\",\n        \"9. Ask Price\": \"1.10370000\"\n    }\n}"

@@ -25,7 +25,10 @@ class AlphavantageExchangeTest extends TestCase
         $this->assertInstanceOf(AlphavantageExchange::class, $this->alphavantage);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @vcr alphavantage.yml
+     */
     public function test_should_convert_money_to_another_currency(): void
     {
         $money = new Money(1000, new Currency('EUR'));

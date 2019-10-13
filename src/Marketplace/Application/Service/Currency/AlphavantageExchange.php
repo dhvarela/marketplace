@@ -8,7 +8,6 @@ use App\Marketplace\Domain\Model\Money\Money;
 use Dotenv\Dotenv;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use RuntimeException;
 
 class AlphavantageExchange implements CurrencyExchangeRate
@@ -36,17 +35,13 @@ class AlphavantageExchange implements CurrencyExchangeRate
 
         try {
 
-            $res = $this->client->request('GET', $url);
+            $res = file_get_contents($url);
 
-            if ($res->getStatusCode() != 200) {
-                throw new RuntimeException('Alphavantage exchange conversion error');
-            }
-            $content = $res->getBody()->getContents();
-            $realtimeCurrencyExchangeRate = json_decode($content);
+            $realtimeCurrencyExchangeRate = json_decode($res);
             $exchangeRate = $realtimeCurrencyExchangeRate->{self::REALTIME_RATE_OBJECT}->{self::EXCHANGE_RATE_ATTRIBUTE};
 
-        } catch (GuzzleException $e) {
-            throw new RuntimeException($e->getMessage());
+        } catch (Exception $e) {
+            throw new RuntimeException('Alphavantage exchange conversion error');
         }
 
         return new Money(
