@@ -7,6 +7,8 @@ use App\Marketplace\Domain\Model\Product\ProductInterface;
 
 class CartLine
 {
+    const MAX_PRODUCT_UNITS = 50;
+
     /** @var ProductInterface */
     private $product;
     /** @var int */
@@ -14,6 +16,8 @@ class CartLine
 
     public function __construct(ProductInterface $product, int $quantity)
     {
+        $this->ensureMaxProductUnitsNotReached($quantity);
+
         $this->product = $product;
         $this->quantity = $quantity;
     }
@@ -26,5 +30,12 @@ class CartLine
     public function quantity(): int
     {
         return $this->quantity;
+    }
+
+    private function ensureMaxProductUnitsNotReached(int $quantity)
+    {
+        if ($quantity > self::MAX_PRODUCT_UNITS) {
+            MaxProductUnitsReached::throw();
+        }
     }
 }

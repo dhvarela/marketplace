@@ -8,6 +8,8 @@ use App\Marketplace\Domain\Model\Product\Product;
 use App\Marketplace\Domain\Model\Product\ProductInterface;
 use App\Marketplace\Domain\Model\Cart\LinesLimitReached;
 use App\Marketplace\Domain\Model\Cart\ProductDoesNotExistInCart;
+use App\Marketplace\Domain\Model\CartLine\CartLine;
+use App\Marketplace\Domain\Model\CartLine\MaxProductUnitsReached;
 use PHPUnit\Framework\TestCase;
 
 class CartTest extends TestCase
@@ -94,6 +96,17 @@ class CartTest extends TestCase
         foreach ($products as $aProduct) {
             $cart->addProductWithQuantity($aProduct, rand(1,10));
         }
+    }
+
+    /** @test */
+    public function test_should_fail_when_max_product_units_are_reached() : void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+
+        $this->expectException(MaxProductUnitsReached::class);
+
+        $cart->addProductWithQuantity($product1, CartLine::MAX_PRODUCT_UNITS + 1);
     }
 
     private function getProduct($id, $amount, $offerAmount, $isoCode, $minUnitsToApplyOffer): ProductInterface
