@@ -15,7 +15,6 @@
   "minimum-stability": "dev",
   "require": {
     "ext-json": "*",
-    "ext-http": "*",
     "ramsey/uuid": "^4.0@dev",
     "guzzlehttp/guzzle": "~6.0",
     "vlucas/phpdotenv": "^3.6@dev",

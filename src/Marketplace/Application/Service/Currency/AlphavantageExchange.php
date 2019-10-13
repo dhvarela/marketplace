@@ -2,7 +2,6 @@
 
 namespace App\Marketplace\Application\Service\Currency;
 
-
 use App\Marketplace\Domain\Model\Currency\Currency;
 use App\Marketplace\Domain\Model\Money\Money;
 use Dotenv\Dotenv;
@@ -15,8 +14,7 @@ class AlphavantageExchange implements CurrencyExchangeRate
     const CURRENCY_EXCHANGE_RATE_FUNCTION = 'CURRENCY_EXCHANGE_RATE';
     const REALTIME_RATE_OBJECT = 'Realtime Currency Exchange Rate';
     const EXCHANGE_RATE_ATTRIBUTE = '5. Exchange Rate';
-
-    private $client;
+    const ERROR_MESSAGE = 'Error Message';
 
     public function __construct()
     {
@@ -30,16 +28,13 @@ class AlphavantageExchange implements CurrencyExchangeRate
     {
         $url = $this->createUrl($from->currency(), $to);
 
-        try {
+        $res = file_get_contents($url);
 
-            $res = file_get_contents($url);
-
-            $realtimeCurrencyExchangeRate = json_decode($res);
-            $exchangeRate = $realtimeCurrencyExchangeRate->{self::REALTIME_RATE_OBJECT}->{self::EXCHANGE_RATE_ATTRIBUTE};
-
-        } catch (Exception $e) {
+        $realtimeCurrencyExchangeRate = json_decode($res);
+        if (isset($realtimeCurrencyExchangeRate->{self::ERROR_MESSAGE})) {
             throw new RuntimeException('Alphavantage exchange conversion error');
         }
+        $exchangeRate = $realtimeCurrencyExchangeRate->{self::REALTIME_RATE_OBJECT}->{self::EXCHANGE_RATE_ATTRIBUTE};
 
         return new Money(
             intval(round($exchangeRate * $from->amount()/100, 2) * 100),
