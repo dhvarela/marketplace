@@ -7,6 +7,7 @@ use App\Marketplace\Application\Service\Currency\AlphavantageExchange;
 use App\Marketplace\Domain\Model\Currency\Currency;
 use App\Marketplace\Domain\Model\Money\Money;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class AlphavantageExchangeTest extends TestCase
 {
@@ -38,5 +39,19 @@ class AlphavantageExchangeTest extends TestCase
 
         $this->assertEquals($currencyExpected, $convertedMoney->currency());
         $this->assertGreaterThan(0, $convertedMoney->amount());
+    }
+
+    /**
+     * @test
+     * @vcr alphavantageWithBadCurrency.yml
+     */
+    public function test_should_fail_when_iso_code_currency_is_not_correct(): void
+    {
+        $money = new Money(1000, new Currency('EUR'));
+        $conversionCurrency = new Currency('YZS');
+
+        $this->expectException(RuntimeException::class);
+
+        $this->alphavantage->execute($money, $conversionCurrency);
     }
 }
