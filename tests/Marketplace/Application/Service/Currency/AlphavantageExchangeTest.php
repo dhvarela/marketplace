@@ -6,7 +6,6 @@ namespace App\Tests\Marketplace\Application\Service\Currency;
 use App\Marketplace\Application\Service\Currency\AlphavantageExchange;
 use App\Marketplace\Domain\Model\Currency\Currency;
 use App\Marketplace\Domain\Model\Money\Money;
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
 class AlphavantageExchangeTest extends TestCase
@@ -15,8 +14,7 @@ class AlphavantageExchangeTest extends TestCase
 
     protected function setUp(): void
     {
-        $client = new Client();
-        $this->alphavantage = new AlphavantageExchange($client);
+        $this->alphavantage = new AlphavantageExchange();
     }
 
     /** @test */

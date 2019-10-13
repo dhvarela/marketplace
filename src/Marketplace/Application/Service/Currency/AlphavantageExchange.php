@@ -7,7 +7,6 @@ use App\Marketplace\Domain\Model\Currency\Currency;
 use App\Marketplace\Domain\Model\Money\Money;
 use Dotenv\Dotenv;
 use Exception;
-use GuzzleHttp\Client;
 use RuntimeException;
 
 class AlphavantageExchange implements CurrencyExchangeRate
@@ -19,10 +18,8 @@ class AlphavantageExchange implements CurrencyExchangeRate
 
     private $client;
 
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
-
         $dotenv = Dotenv::create(
             __DIR__ . self::DS . '..' . self::DS . '..' . self::DS . '..' . self::DS . '..' . self::DS . '..'
         );
