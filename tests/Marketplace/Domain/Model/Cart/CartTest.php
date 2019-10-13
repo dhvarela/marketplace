@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Tests\Marketplace\Domain\Model\Cart;
+
 use App\Marketplace\Domain\Model\Cart\Cart;
 use App\Marketplace\Domain\Model\Money\Money;
 use App\Marketplace\Domain\Model\Currency\Currency;
