@@ -8,6 +8,7 @@ use App\Marketplace\Domain\Model\Product\Product;
 use App\Marketplace\Domain\Model\Product\ProductInterface;
 use App\Marketplace\Domain\Model\Cart\LinesLimitReached;
 use App\Marketplace\Domain\Model\Cart\ProductDoesNotExistInCart;
+use App\Marketplace\Domain\Model\Cart\ProductCurrenciesAreNotTheSame;
 use App\Marketplace\Domain\Model\CartLine\CartLine;
 use App\Marketplace\Domain\Model\CartLine\MaxProductUnitsReached;
 use PHPUnit\Framework\TestCase;
@@ -43,6 +44,16 @@ class CartTest extends TestCase
 
         $this->assertCount(1, $cart);
         $this->assertEquals(5, $cart->totalProducts());
+    }
+
+    /** @test */
+    public function test_should_fail_adding_a_product_with_different_cart_currency(): void
+    {
+        $cart = Cart::init();
+        $product = $this->getProduct('product-a', 10, 9, 'USD', 3);
+
+        $this->expectException(ProductCurrenciesAreNotTheSame::class);
+        $cart->addProductWithQuantity($product, 1);
     }
 
     /** @test */
@@ -107,6 +118,47 @@ class CartTest extends TestCase
         $this->expectException(MaxProductUnitsReached::class);
 
         $cart->addProductWithQuantity($product1, CartLine::MAX_PRODUCT_UNITS + 1);
+    }
+
+    /** @test */
+    public function test_should_calculate_amount_without_offer() : void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+
+        $cart->addProductWithQuantity($product1, 2);
+
+        $moneyExpected = new Money(20, new Currency('EUR'));
+
+        $this->assertEquals($moneyExpected, $cart->moneyWithoutOffer());
+    }
+
+    /** @test */
+    public function test_should_calculate_amount_with_offers() : void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+
+        $cart->addProductWithQuantity($product1, 4);
+
+        $moneyExpected = new Money(36, new Currency('EUR'));
+
+        $this->assertEquals($moneyExpected, $cart->moneyWithOffer());
+    }
+
+    /** @test */
+    public function test_should_calculate_amount_with_offer_when_cart_has_offer_and_non_offer_products() : void
+    {
+        $cart = Cart::init();
+        $product1 = $this->getProduct('product-a', 10, 9, 'EUR', 3);
+        $product2 = $this->getProduct('product-b', 15, 12, 'EUR', 4);
+
+        $cart->addProductWithQuantity($product1, 2);
+        $cart->addProductWithQuantity($product2, 4);
+
+        $moneyExpected = new Money(68, new Currency('EUR'));
+
+        $this->assertEquals($moneyExpected, $cart->moneyWithOffer());
     }
 
     private function getProduct($id, $amount, $offerAmount, $isoCode, $minUnitsToApplyOffer): ProductInterface

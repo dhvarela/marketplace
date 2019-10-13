@@ -34,4 +34,12 @@ class Money
             $money->currency()->equals($this->currency()) &&
             $money->amount() === $this->amount();
     }
+
+    public function increaseAmount($anAmount)
+    {
+        return new self(
+            $this->amount() + $anAmount,
+            $this->currency()
+        );
+    }
 }

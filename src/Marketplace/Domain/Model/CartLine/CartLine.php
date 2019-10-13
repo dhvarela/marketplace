@@ -32,6 +32,11 @@ class CartLine
         return $this->quantity;
     }
 
+    public function applyOffer(): bool
+    {
+        return $this->quantity >= $this->product->minUnitsToApplyOffer();
+    }
+
     private function ensureMaxProductUnitsNotReached(int $quantity)
     {
         if ($quantity > self::MAX_PRODUCT_UNITS) {
