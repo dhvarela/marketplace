@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Marketplace\Domain\Model\Cart;
+namespace App\Marketplace\Domain\Cart;
 
-use App\Marketplace\Domain\Model\CartLine\CartLine;
-use App\Marketplace\Domain\Model\Currency\Currency;
-use App\Marketplace\Domain\Model\Money\Money;
-use App\Marketplace\Domain\Model\Product\ProductInterface;
+use App\Marketplace\Domain\CartLine\CartLine;
+use App\Marketplace\Domain\Currency\Currency;
+use App\Marketplace\Domain\Money\Money;
+use App\Marketplace\Domain\Product\ProductInterface;
 use Countable;
 
 class Cart implements Countable

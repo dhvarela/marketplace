@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace App\Marketplace\Domain\Model\Cart;
+namespace App\Marketplace\Domain\Cart;
 
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid as RamseyUuid;

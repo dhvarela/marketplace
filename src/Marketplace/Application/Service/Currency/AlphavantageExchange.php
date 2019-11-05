@@ -2,8 +2,8 @@
 
 namespace App\Marketplace\Application\Service\Currency;
 
-use App\Marketplace\Domain\Model\Currency\Currency;
-use App\Marketplace\Domain\Model\Money\Money;
+use App\Marketplace\Domain\Currency\Currency;
+use App\Marketplace\Domain\Money\Money;
 use Dotenv\Dotenv;
 use RuntimeException;
 

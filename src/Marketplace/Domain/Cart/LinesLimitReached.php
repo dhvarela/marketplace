@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Marketplace\Domain\Model\Cart;
+namespace App\Marketplace\Domain\Cart;
 
 
 use OverflowException;

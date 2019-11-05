@@ -5,11 +5,11 @@ namespace App\Tests\Marketplace\Application\Service\Cart;
 
 use App\Marketplace\Application\Service\Cart\CartMoneyConverter;
 use App\Marketplace\Application\Service\Currency\AlphavantageExchange;
-use App\Marketplace\Domain\Model\Cart\Cart;
-use App\Marketplace\Domain\Model\Currency\Currency;
-use App\Marketplace\Domain\Model\Money\Money;
-use App\Marketplace\Domain\Model\Product\Product;
-use App\Marketplace\Domain\Model\Product\ProductInterface;
+use App\Marketplace\Domain\Cart\Cart;
+use App\Marketplace\Domain\Currency\Currency;
+use App\Marketplace\Domain\Money\Money;
+use App\Marketplace\Domain\Product\Product;
+use App\Marketplace\Domain\Product\ProductInterface;
 use PHPUnit\Framework\TestCase;
 
 class CartMoneyConverterTest extends TestCase

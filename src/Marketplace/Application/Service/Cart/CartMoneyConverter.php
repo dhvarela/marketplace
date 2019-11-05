@@ -3,8 +3,8 @@
 namespace App\Marketplace\Application\Service\Cart;
 
 use App\Marketplace\Application\Service\Currency\CurrencyExchangeRate;
-use App\Marketplace\Domain\Model\Currency\Currency;
-use App\Marketplace\Domain\Model\Money\Money;
+use App\Marketplace\Domain\Currency\Currency;
+use App\Marketplace\Domain\Money\Money;
 
 class CartMoneyConverter
 {

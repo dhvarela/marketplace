@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Tests\Marketplace\Application\Service\Currency;
 
 use App\Marketplace\Application\Service\Currency\AlphavantageExchange;
-use App\Marketplace\Domain\Model\Currency\Currency;
-use App\Marketplace\Domain\Model\Money\Money;
+use App\Marketplace\Domain\Currency\Currency;
+use App\Marketplace\Domain\Money\Money;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Marketplace\Domain\Model\Money;
+namespace App\Marketplace\Domain\Money;
 
-use App\Marketplace\Domain\Model\Currency\Currency;
+use App\Marketplace\Domain\Currency\Currency;
 
 class Money
 {

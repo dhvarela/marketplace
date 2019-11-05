@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Marketplace\Domain\Model\CartLine;
+namespace App\Marketplace\Domain\CartLine;
 
-use App\Marketplace\Domain\Model\Product\ProductInterface;
+use App\Marketplace\Domain\Product\ProductInterface;
 
 class CartLine
 {

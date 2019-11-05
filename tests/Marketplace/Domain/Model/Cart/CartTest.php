@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Tests\Marketplace\Domain\Model\Cart;
+namespace App\Tests\Marketplace\Domain\Cart;
 
-use App\Marketplace\Domain\Model\Cart\Cart;
-use App\Marketplace\Domain\Model\Money\Money;
-use App\Marketplace\Domain\Model\Currency\Currency;
-use App\Marketplace\Domain\Model\Product\Product;
-use App\Marketplace\Domain\Model\Product\ProductInterface;
-use App\Marketplace\Domain\Model\Cart\LinesLimitReached;
-use App\Marketplace\Domain\Model\Cart\ProductDoesNotExistInCart;
-use App\Marketplace\Domain\Model\Cart\ProductCurrenciesAreNotTheSame;
-use App\Marketplace\Domain\Model\CartLine\CartLine;
-use App\Marketplace\Domain\Model\CartLine\MaxProductUnitsReached;
+use App\Marketplace\Domain\Cart\Cart;
+use App\Marketplace\Domain\Money\Money;
+use App\Marketplace\Domain\Currency\Currency;
+use App\Marketplace\Domain\Product\Product;
+use App\Marketplace\Domain\Product\ProductInterface;
+use App\Marketplace\Domain\Cart\LinesLimitReached;
+use App\Marketplace\Domain\Cart\ProductDoesNotExistInCart;
+use App\Marketplace\Domain\Cart\ProductCurrenciesAreNotTheSame;
+use App\Marketplace\Domain\CartLine\CartLine;
+use App\Marketplace\Domain\CartLine\MaxProductUnitsReached;
 use PHPUnit\Framework\TestCase;
 
 class CartTest extends TestCase

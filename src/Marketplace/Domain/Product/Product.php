@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Marketplace\Domain\Model\Product;
+namespace App\Marketplace\Domain\Product;
 
-use App\Marketplace\Domain\Model\Money\Money;
+use App\Marketplace\Domain\Money\Money;
 
 class Product implements ProductInterface
 {

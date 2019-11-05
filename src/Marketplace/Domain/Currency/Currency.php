@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Marketplace\Domain\Model\Currency;
+namespace App\Marketplace\Domain\Currency;
 
 use InvalidArgumentException;
 
