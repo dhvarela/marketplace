@@ -15,7 +15,7 @@ class CartMoneyConverter
         $this->exchangeRate = $exchangeRate;
     }
 
-    public function __invoke(Money $money, Currency $currency): Money
+    public function execute(Money $money, Currency $currency): Money
     {
         return $this->exchangeRate->execute($money, $currency);
     }

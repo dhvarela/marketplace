@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Tests\Marketplace\Application\Service\Cart;
 
 use App\Marketplace\Application\Service\Cart\CartMoneyConverter;
-use App\Marketplace\Application\Service\Currency\AlphavantageExchange;
+use App\Marketplace\Infrastructure\Currency\AlphavantageExchange;
 use App\Marketplace\Domain\Cart\Cart;
 use App\Marketplace\Domain\Currency\Currency;
 use App\Marketplace\Domain\Money\Money;
@@ -28,8 +28,8 @@ class CartMoneyConverterTest extends TestCase
         $alphavantage = new AlphavantageExchange();
         $cartMoneyConverter = new CartMoneyConverter($alphavantage);
 
-        $priceWithoutOfferInBritishPound = $cartMoneyConverter($cart->moneyWithoutOffer(), new Currency('GBP'));
-        $priceWithOfferInUsd = $cartMoneyConverter($cart->moneyWithoutOffer(), new Currency('USD'));
+        $priceWithoutOfferInBritishPound = $cartMoneyConverter->execute($cart->moneyWithoutOffer(), new Currency('GBP'));
+        $priceWithOfferInUsd = $cartMoneyConverter->execute($cart->moneyWithoutOffer(), new Currency('USD'));
 
         $this->assertEquals(new Currency('GBP'), $priceWithoutOfferInBritishPound->currency());
         $this->assertGreaterThan(0, $priceWithoutOfferInBritishPound->amount());

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Marketplace\Application\Service\Currency;
+namespace App\Marketplace\Infrastructure\Currency;
 
+use App\Marketplace\Application\Service\Currency\CurrencyExchangeRate;
 use App\Marketplace\Domain\Currency\Currency;
 use App\Marketplace\Domain\Money\Money;
 use Dotenv\Dotenv;
@@ -18,7 +19,7 @@ class AlphavantageExchange implements CurrencyExchangeRate
     public function __construct()
     {
         $dotenv = Dotenv::create(
-            __DIR__ . self::DS . '..' . self::DS . '..' . self::DS . '..' . self::DS . '..' . self::DS . '..'
+            __DIR__ . self::DS . '..' . self::DS . '..' . self::DS . '..' . self::DS . '..'
         );
         $dotenv->load();
     }
