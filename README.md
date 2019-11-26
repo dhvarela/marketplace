@@ -1,9 +1,9 @@
 ## MarketPlace
 
-Marketplace is shopping cart project that allows you to add products to a Cart.
+Marketplace is a shopping cart project that allows you to add products to a Cart.
 Products may have offers according to the units added.
  
-The project use Alphavantage (https://www.alphavantage.co) as a Currency Exchange third party api to allow the currency conversions.
+The project uses Alphavantage (https://www.alphavantage.co) as a Currency Exchange third party api to allow the currency conversions.
 
 The Alphavantage api endpoints are cached by php-vcr package. 
 So, the first time you run the tests, api calls are executed and it costs some extra milliseconds. The next times you run the tests, vcr will get responses from /test/fixtures cached files and it will cost no extra time. 
@@ -13,7 +13,7 @@ So, the first time you run the tests, api calls are executed and it costs some e
 
 ##### Clone the project
 
-    $ git clone https://dhvarela83@bitbucket.org/dhvarela83/marketplace.git
+    $ git clone https://github.com/dhvarela/marketplace.git
     $ cd marketplace/
     
 ##### Environment configuration 
@@ -22,7 +22,7 @@ i) Copy the default environment variables:
 
     $ cp .env.template .env
     
-ii) Fill ALPHAVANTAGE_KEY variable with your Alphavantage free api key
+ii) Fill ALPHAVANTAGE_KEY variable with your Alphavantage free api key.
 You can get an Alphavantage free api key from https://www.alphavantage.co/support/#api-key
 
 iii) Add marketplace.local domain to your local hosts:
